@@ -6,4 +6,6 @@ FROM mcr.microsoft.com/vscode/devcontainers/cpp:0-${VARIANT}
 
 # [Optional] Uncomment this section to install additional packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends python
+    && apt-get -y install --no-install-recommends python python3-pip && apt-get -y purge cmake
+
+RUN pip3 install 'cmake>=3.19'
