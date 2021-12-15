@@ -5,7 +5,11 @@ ARG VARIANT="bullseye"
 FROM mcr.microsoft.com/vscode/devcontainers/cpp:0-${VARIANT}
 
 # [Optional] Uncomment this section to install additional packages.
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends python python3-pip && apt-get -y purge cmake
+RUN apt-get update
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends python python3-pip
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y purge cmake && apt-get -y autoremove
 
 RUN pip3 install 'cmake>=3.19'
+
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y install x11proto-dev libx11-dev libgtk-3-dev libglib2.0-dev
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y install libnss3 libasound2
