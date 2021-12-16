@@ -1,3 +1,19 @@
+# Обращения к `window.chrome`
+
+В файле `sandpit/renderer/client_renderer.cc` в callback'е `onContextCreated` во фрейм вставлен proxy объект `window.chrome` и его интерсептор.
+
+При запуске:
+
+    > ./build/sandpit/Release/sandpit --no-sandbox
+
+в файле `/tmp/sandpiе.log` видны все интерсепты доступа к объекту `window.chrome`. К сожалению, скорее всего, это не все поля к которым страница обращалась, так как, если мы запустим:
+
+    > ./build/sandpit/Release/sandpit --no-sandbox --use-view --enable-chrome-runtime
+
+то авторизация в Google пройдет успешно, при этом в объекте `window.chrome`, будут дополнительно поля `app`, `runtime`, `setSyncEncryptionKeys`, `addTrustedSyncEncryptionRecoveryMethod`. Скорее всего страница авторизации оценивает безопасность браузера в том при доступе к этим полям объекта.
+
+----------------------------------------------
+
 The [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef/) (CEF) is a simple framework for embedding Chromium-based browsers in other applications. This repository hosts a sample project called "cef-project" that can be used as the starting point for third-party applications built using CEF.
 
 # Quick Links
